@@ -69,3 +69,11 @@ color: ${p => {
 
 // }
 // `;
+
+export const Actions = styled.div`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+`;
