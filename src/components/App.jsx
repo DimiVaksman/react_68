@@ -5,21 +5,36 @@ import { GlobalStyle } from './GlobalStyle';
 import { Layout } from './layout/layout';
 import { RecipeForm } from './RecipeForm/RecipeForm';
 
-// export const App = () => {
-//   return (
-//     <Layout>
-//       <div>Recipe Form</div>
-//       <RecipeList items={recipes} />
-//       <GlobalStyle />
-//       <div>Image Modal</div>
-//     </Layout>
-//   );
-// };
+
+
+// render => componentDidMount => getItem => setState => update => render => componentDidUpdate => setItem
 
 export class App extends Component {
   state = {
     recipes: Inrecipes,
   };
+
+  componentDidMount(){
+   const saveRecipes = localStorage.getItem('recipes')
+   if(saveRecipes !== null){
+    // если сохранили в лс уже что-то, пишем ето в state
+    this.setState({
+      recipes: JSON.parse(saveRecipes)
+    })
+   }
+   else{
+    // Если в лс ничего еще нет, пишем в state Inrecipes
+    this.setState({
+      recipes: Inrecipes
+    })
+   }
+
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(prevState.recipes !== this.state.recipes)
+localStorage.setItem('recipes', JSON.stringify(this.state.recipes))
+  }
 
   addRecipe = newRecipe => {
     this.setState(prevState => ({

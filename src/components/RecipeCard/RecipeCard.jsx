@@ -9,11 +9,23 @@ import {
   Badge,
   Actions,
 } from './RecipeCard.styled';
-import { RecipeDefficulty } from 'constants';
+import { RecipeDifficulty } from 'constants';
 import { Component } from 'react';
 import { ImgModal } from '../Imgmodal/imgmodal';
 
 export class RecipeCard extends Component {
+  static propTypes = {
+ 
+      item: PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        time: PropTypes.number.isRequired,
+        servings: PropTypes.number.isRequired,
+        calories: PropTypes.number.isRequired,
+        difficulty: PropTypes.oneOf(['easy', 'medium', 'hard']).isRequired,
+      }).isRequired,
+    
+  }
   state = {
     selectedImg: null,
   };
@@ -53,16 +65,16 @@ export class RecipeCard extends Component {
         <div>
           <h3>Difficulty</h3>
           <BadgeList>
-            <Badge active={difficulty === RecipeDefficulty.easy} type="easy">
+            <Badge active={difficulty === RecipeDifficulty.easy} type="easy">
               Easy
             </Badge>
             <Badge
-              active={difficulty === RecipeDefficulty.medium}
+              active={difficulty === RecipeDifficulty.medium}
               type="medium"
             >
               Medium
             </Badge>
-            <Badge active={difficulty === RecipeDefficulty.hard} type="hard">
+            <Badge active={difficulty === RecipeDifficulty.hard} type="hard">
               Hard
             </Badge>
           </BadgeList>
