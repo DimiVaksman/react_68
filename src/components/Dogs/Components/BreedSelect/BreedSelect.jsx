@@ -1,44 +1,45 @@
-import { fetchBreeds } from 'components/Dogs/dogsapi';
 import { Component } from 'react';
 import Select from 'react-select';
+import { fetchBreeds } from '../dogsapi';
 
-// const options = [
-//   { value: 'chocolate', label: 'Chocolate' },
-//   { value: 'strawberry', label: 'Strawberry' },
-//   { value: 'vanilla', label: 'Vanilla' },
-// ];
+
+const ERROR_MSG =
+  'Что-то пошло не так, перезагрузите страницу, вдруг поможет 🥹';
 
 export class BreedSelect extends Component {
+  state = {
+    breeds: [],
+    isLoading: false,
+    error: null,
+  };
 
-    state = {
-        breeds: [],
-        isLoading: false, 
-        error: null,
-    }
   async componentDidMount() {
     try {
-        this.setState({isLoading: true, error: null})
-        const fetchedBreed = await fetchBreeds()
-        this.setState({breeds: fetchedBreed})
+      this.setState({ isLoading: true, error: null });
+      const fetchedBreeds = await fetchBreeds();
+      this.setState({ breeds: fetchedBreeds });
     } catch (error) {
-        this.setState({error: 'error'})
-    } finally{
-        this.setState({isLoading: false})
+      this.setState({ error: ERROR_MSG });
+    } finally {
+      this.setState({ isLoading: false });
     }
   }
 
   render() {
-
-    const options = this.state.breeds.map(breed => ({
-        value: breed.id,
-        label: breed.name
-
-    }))
+    const { breeds, isLoading, error } = this.state;
+    const options = breeds.map(breed => ({
+      value: breed.id,
+      label: breed.name,
+    }));
 
     return (
       <div>
-        <Select options={options} isLoading={this.state.isLoading} onChange={option => this.props.onSelect(option.value)} />
-        {this.state.error && <p>{this.state.error}</p>}
+        <Select
+          options={options}
+          isLoading={isLoading}
+          onChange={option => this.props.onSelect(option.value)}
+        />
+        {error && <p>{error}</p>}
       </div>
     );
   }

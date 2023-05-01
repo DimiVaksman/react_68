@@ -1,17 +1,17 @@
 
  
 
-export const DogCard = ({ dog: { breeds, url } }) => {
-    // const { bred_for, name, temperament } = breeds[0];
-  
-    return (
-      <div style={{ display: 'flex' }}>
-        <img src={breeds.url} alt={breeds.name} width="320" />
-        <div>
-          <p>Name: {breeds.name}</p>
-          <p>Bred for: {breeds.bred_for}</p>
-          <p>Temperament: {breeds.temperament}</p>
-        </div>
+export const Dog = ({ dog: { breeds, url } }) => {
+  const { bred_for, name, temperament } = breeds[0];
+
+  return (
+    <div style={{ display: 'flex' }}>
+      <img src={url} alt={name} width="320" />
+      <div>
+        <p>Name: {name}</p>
+        <p>Bred for: {bred_for}</p>
+        <p>Temperament: {temperament}</p>
       </div>
-    );
-  };
+    </div>
+  );
+};
