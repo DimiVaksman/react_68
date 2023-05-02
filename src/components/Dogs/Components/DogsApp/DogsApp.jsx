@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { BreedSelect } from '../BreedSelect/BreedSelect';
 import { fetchDogByBreed } from '../dogsapi';
 import { Dog } from '../DogCard/DogCard';
+import { DogsSkeleton } from 'components/Dogs/DogSkeleton/DogSkeleton';
 // import { DogSkeleton } from './DogSkeleton';
 
 const ERROR_MSG =
@@ -31,8 +32,9 @@ export class DogsApps extends Component {
     return (
       <div>
         <BreedSelect onSelect={this.fetchDog} />
-        {/* {isLoading && <DogSkeleton />} */}
+
         {error && <p>{error}</p>}
+        {isLoading && <DogsSkeleton />}
         {dog && !isLoading && <Dog dog={dog} />}
       </div>
     );
